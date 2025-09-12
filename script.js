@@ -45,6 +45,8 @@ for (let i = 1; i < 100; i++) {
 const MAX_VOLUME = 100; // mL
 const MIN_VOLUME = 0; // mL. 이 값을 조절하여 부피 범위를 설정하세요.
 const MAX_SLIDER_VALUE = 400;
+const BARREL_TOP = 200; // 주사기 통의 상단 Y 좌표 (px)
+const PLUNGER_MAX_TRAVEL = 300; // 플런저가 움직일 수 있는 최대 거리 (px)
 
 // 슬라이더 이동 시 plunger 위치 및 압력/부피 업데이트
 slider.addEventListener('input', () => {
@@ -242,4 +244,94 @@ document.addEventListener('DOMContentLoaded', () => {
   // 초기에는 압력 측정이 비활성화
   isDropped = false;
   pressureDisplay.textContent = '0.00';
+});
+
+// --- 플런저 드래그 기능 추가 ---
+let isPlungerDragging = false;
+let plungerStartPosY = 0; // 플런저 드래그 시작 시 Y 위치
+let sliderStartValue = 0; // 플런저 드래그 시작 시 슬라이더 값
+
+// 플런저 드래그 시작 (마우스)
+plunger.addEventListener('mousedown', (e) => {
+  isPlungerDragging = true;
+  plungerStartPosY = e.clientY;
+  sliderStartValue = slider.value;
+  plunger.style.cursor = 'grabbing';
+  // 드래그 시 반응 속도 향상을 위해 트랜지션 일시적으로 제거
+  plunger.style.transition = 'none';
+});
+
+// 플런저 드래그 중 (마우스)
+document.addEventListener('mousemove', (e) => {
+  if (isPlungerDragging) {
+    e.preventDefault(); 
+    const deltaY = e.clientY - plungerStartPosY;
+    
+    // 드래그 방향에 맞춰 슬라이더 값 계산
+    const sliderDelta = (deltaY / PLUNGER_MAX_TRAVEL) * MAX_SLIDER_VALUE;
+    let newSliderValue = parseInt(sliderStartValue) + sliderDelta;
+
+    // 슬라이더 값의 범위를 벗어나지 않도록 제한
+    newSliderValue = Math.max(0, Math.min(MAX_SLIDER_VALUE, newSliderValue));
+    
+    slider.value = newSliderValue;
+    
+    // 플런저 위치 및 압력 업데이트
+    updatePlungerPosition();
+    if (isDropped) {
+      updatePressure();
+    }
+    updateVolumeDisplay();
+  }
+});
+
+// 플런저 드래그 종료 (마우스)
+document.addEventListener('mouseup', () => {
+  isPlungerDragging = false;
+  plunger.style.cursor = 'grab';
+  // 드래그 종료 후 다시 트랜지션 적용 (기존 스타일로 복원)
+  plunger.style.transition = 'transform 0.3s ease';
+});
+
+// 플런저 드래그 시작 (터치)
+plunger.addEventListener('touchstart', (e) => {
+  e.preventDefault(); 
+  e.stopPropagation(); 
+  isPlungerDragging = true;
+  plungerStartPosY = e.touches[0].clientY;
+  sliderStartValue = slider.value;
+  plunger.style.cursor = 'grabbing';
+  // 드래그 시 반응 속도 향상을 위해 트랜지션 일시적으로 제거
+  plunger.style.transition = 'none';
+});
+
+// 플런저 드래그 중 (터치)
+plunger.addEventListener('touchmove', (e) => {
+  if (isPlungerDragging) {
+    e.preventDefault(); 
+    e.stopPropagation(); 
+    const deltaY = e.touches[0].clientY - plungerStartPosY;
+    
+    // 드래그 방향에 맞춰 슬라이더 값 계산
+    const sliderDelta = (deltaY / PLUNGER_MAX_TRAVEL) * MAX_SLIDER_VALUE;
+    let newSliderValue = parseInt(sliderStartValue) + sliderDelta;
+    
+    newSliderValue = Math.max(0, Math.min(MAX_SLIDER_VALUE, newSliderValue));
+    
+    slider.value = newSliderValue;
+    
+    updatePlungerPosition();
+    if (isDropped) {
+      updatePressure();
+    }
+    updateVolumeDisplay();
+  }
+});
+
+// 플런저 드래그 종료 (터치)
+plunger.addEventListener('touchend', () => {
+  isPlungerDragging = false;
+  plunger.style.cursor = 'grab';
+  // 드래그 종료 후 다시 트랜지션 적용 (기존 스타일로 복원)
+  plunger.style.transition = 'transform 0.3s ease';
 });

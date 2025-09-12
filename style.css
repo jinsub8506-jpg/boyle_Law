@@ -131,7 +131,6 @@ input[type="range"] {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: transform 0.3s ease; /* plunger 위치 변경에 트랜지션 적용 */
   z-index: 1;
 }
 
