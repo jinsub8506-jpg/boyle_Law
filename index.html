@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>보일의 법칙 가상실험</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="background-wrapper"></div>
+
+  <h2>💨 보일의 법칙 가상실험</h2>
+
+  <label>🔽 주사기 밀고 당기기</label>
+<div style="display: flex; align-items: center; gap: 10px;">
+  <span>누르기</span>
+  <input type="range" id="depthSlider" min="0" max="400" value="200">
+  <span>당기기</span>
+</div>
+<button id="resetButton">초기화</button>
+  <p>압력 센서를 드래그해서 주사기의 입구를 막고 부피를 변화시켜보세요!</p>
+
+  <div id="rig" draggable="true">
+    <div id="sensor">
+      <span id="pressure">0.00</span> atm
+    </div>
+  </div>
+
+  <div id="drop-zone"></div>
+  
+  <div id="sensor-pool"></div>
+
+  <div class="volume-control">
+    <label for="showVolumeCheckbox">
+      <input type="checkbox" id="showVolumeCheckbox">
+      부피보이기
+    </label>
+    <span id="volumeDisplay" style="display:none;"></span>
+  </div>
+
+  <div id="barrel">
+  <div id="scale">
+    <div class="tick" style="bottom: 0%">100</div>
+    <div class="tick" style="bottom: 10%">90</div>
+    <div class="tick" style="bottom: 20%">80</div>
+    <div class="tick" style="bottom: 30%">70</div>
+    <div class="tick" style="bottom: 40%">60</div>
+    <div class="tick" style="bottom: 50%">50</div>
+    <div class="tick" style="bottom: 60%">40</div>
+    <div class="tick" style="bottom: 70%">30</div>
+    <div class="tick" style="bottom: 80%">20</div>
+    <div class="tick" style="bottom: 90%">10</div>
+    <div class="tick" style="bottom: 100%">0</div>
+  </div>
+  <div id="plunger"></div>
+</div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+body {
+  font-family: sans-serif;
+  background: #eef;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 20px;
+  margin-left: 330px;
+}
+
+#background-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 960px;
+  height: 800px;
+  background-image: url("lab-background.png");
+  background-repeat: no-repeat;
+  background-size: 860px 680px;
+  z-index: -3;
+}
+
+#sensor {
+  margin-top: 10px;
+  font-size: 18px;
+  background: #000;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  z-index: 3;
+}
+
+input[type="range"] {
+  width: 300px;
+  margin-top: 20px;
+}
+
+#weight-pool {
+  position: fixed;
+  top: 150px;
+  left: 30px;
+  width: 80px;
+  height: 330px;
+  background: #ddd;
+  border: 2px solid #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  z-index: 1;
+}
+
+.weight {
+  width: 50px;
+  height: 40px;
+  background: #888;
+  cursor: grab;
+  background-image: url('weight.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* rig와 sensor-anchor를 분리 */
+#rig {
+  /* 초기 위치를 스크립트로 제어하기 위해 top, left 값 삭제 */
+  position: absolute;
+  width: 90px;
+  height: 100px;
+  background-image: url('sensor.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: grab;
+  /* z-index를 추가하여 드래그 가능하게 만듭니다. */
+  z-index: 3;
+}
+
+#sensor-pool {
+  position: absolute;
+  top: 300px;
+  left: 400px;
+  width: 300px;
+  height: 300px;
+  border: 2px dashed #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
+  box-sizing: border-box;
+}
+
+#drop-zone {
+  position: absolute;
+  top: 150px;
+  left: 150px;
+  width: 100px;
+  height: 100px;
+  border: 2px dashed #ff0000;
+  background-color: rgba(255, 0, 0, 0.1);
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+
+/* 🧪 바렐 */
+#barrel {
+  position: absolute;
+  top: 200px;
+  left: 150px;
+  width: 100px;
+  height: 400px;
+  background-image: url('barrel.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* 플런져 */
+#plunger {
+  position: absolute;
+  top: 210px;
+  bottom: 0;
+  height: 400px;
+  width: 100px;
+  background-image: url('plunger.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.3s ease; /* plunger 위치 변경에 트랜지션 적용 */
+  z-index: 1;
+}
+
+/* 📏 눈금 영역 */
+#scale {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  width: 80px;
+  height: 300px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+
+.tick {
+  position: absolute;
+  left: 5px;
+  font-size: 12px;
+  color: #000;
+  width: 100%;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #000;
+  border-top: none;
+  z-index: 2;
+}
+
+.subtick {
+  position: absolute;
+  right: 5px;
+  width: 30%;
+  height: 0;
+  border-bottom: 1px solid #444;
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.midtick {
+  position: absolute;
+  right: 5px;
+  width: 60%;
+  height: 0;
+  border-bottom: 2px solid #444;
+  opacity: 0.8;
+  z-index: 2;
+}
+
+.weight-label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.string-segment {
+  width: 4px;
+  height: 5px;
+  background: #444;
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+.volume-control {
+    position: absolute;
+    top: 610px; /* sensor-pool보다 아래에 위치하도록 값 조정 */
+    left: 400px;
+}
