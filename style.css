@@ -197,4 +197,5 @@ input[type="range"] {
     position: absolute;
     top: 610px; /* sensor-pool보다 아래에 위치하도록 값 조정 */
     left: 400px;
+    display: none;  /* 수행평가시 부피가 안보이게*/
 }
